@@ -13,32 +13,14 @@
                 <h1>Welcome to this website!</h1>
             </header>
             <main>
-                <form id="toast-form" action="/submit" method="POST">
-                    <label for="content">Toast content:</label>
-                    <input type="text" name="content" required><br><br>
+                <div id="work">
+                    <div id="controls">
+                        <button id="close-btn">close</button>
+                    </div>
+                    <div id="anim">
 
-                    <label>
-                        <input type="radio" name="position" value="0" required>
-                        Top-left
-                    </label><br>
-
-                    <label>
-                        <input type="radio" name="position" value="1">
-                        Top-right
-                    </label><br>
-                
-                    <label>
-                        <input type="radio" name="position" value="2">
-                        Bottom-left
-                    </label><br>
-
-                    <label>
-                        <input type="radio" name="position" value="3">
-                        Bottom-right
-                    </label><br><br>
-
-                    <button type="submit">Send toast</button>
-                </form>
+                    </div>
+                </div>
             </main>
             <footer>
                 <h1>Have a nice day!</h1>
@@ -48,11 +30,12 @@
         <div class="container-right">
             <nav>
                 <ul>
-                    <li><a title="Send" href="{{ url_for('send_page') }}">Send page</a></li>
-                    <li><a title="Receive" href="{{ url_for('receive_page') }}">Receive page</a></li>
+                    <li><a title="Main" href="{{ url_for('send_page') }}">Main page</a></li>
                 </ul>
             </nav>
             <aside>
+                <button id="play-btn">play</button>
+
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla, debitis dignissimos repudiandae consequuntur quae voluptatum mollitia incidunt facilis doloribus nesciunt atque cupiditate perferendis recusandae eligendi doloremque error illum, in minus?</p>
                 <ol>
                     <li>Stuff</li>

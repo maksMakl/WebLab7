@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, jsonify
 import os
 
 app = Flask(__name__)
-app.config['DEBUG'] = False
+app.config['DEBUG'] = True
 
 @app.route("/")
 def send_page():
@@ -33,5 +33,6 @@ def get_data():
     return jsonify({'data': data})
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    #port = int(os.getenv("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)
+    app.run()

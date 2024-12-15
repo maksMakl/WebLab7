@@ -129,10 +129,21 @@ ol li {
     }
 }
 
-form {
-    border: 1px solid black;
-    padding: 10px;
-    border-radius: 3%;
-    display: flex;
-    flex-direction: column;
+#work
+{
+    width: 100%;
+    height: 100%;
+}
+
+#controls
+{
+    width: 100%;
+    height: 40px;
+}
+
+#anim
+{
+    width: calc(100% - 10px);
+    height: calc(100% - 50px);
+    border: 5px solid yellow;
 }
