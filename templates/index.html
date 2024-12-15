@@ -15,10 +15,12 @@
             <main>
                 <div id="work">
                     <div id="controls">
-                        <button id="close-btn">close</button>
+                        <button id="close-btn" onclick="CloseButtonClick()">close</button>
+                        <button id="start-btn" onclick="StartButtonClick()">start</button>
+                        <button id="reload-btn" onclick="ReloadButtonClick()" style="display: none;">reload</button>
                     </div>
                     <div id="anim">
-
+                        <div id="square"></div>
                     </div>
                 </div>
             </main>
@@ -34,7 +36,7 @@
                 </ul>
             </nav>
             <aside>
-                <button id="play-btn">play</button>
+                <button id="play-btn" onclick="PlayButtonClick()">play</button>
 
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla, debitis dignissimos repudiandae consequuntur quae voluptatum mollitia incidunt facilis doloribus nesciunt atque cupiditate perferendis recusandae eligendi doloremque error illum, in minus?</p>
                 <ol>
@@ -49,5 +51,5 @@
 
         
     </body>
-    <script src="static/js/send_data.js"></script>
+    <script src="static/js/script.js"></script>
 </html>
