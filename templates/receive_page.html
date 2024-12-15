@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Solar system</title>
+        <link rel="stylesheet" href="static/css/style.css">
+        <link rel="stylesheet" href="static/css/layout.css">
+        <link rel="stylesheet" href="static/css/toast-style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Welcome to this website!</h1>
+            </header>
+            <main>
+                
+            </main>
+            <footer>
+                <h1>Have a nice day!</h1>
+            </footer>
+        </div>
+        <div class="stripe"></div>
+        <div class="container-right">
+            <nav>
+                <ul>
+                    <li><a title="Send" href="{{ url_for('send_page') }}">Send page</a></li>
+                    <li><a title="Receive" href="{{ url_for('receive_page') }}">Receive page</a></li>
+                </ul>
+            </nav>
+            <aside>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla, debitis dignissimos repudiandae consequuntur quae voluptatum mollitia incidunt facilis doloribus nesciunt atque cupiditate perferendis recusandae eligendi doloremque error illum, in minus?</p>
+                <ol>
+                    <li>Stuff</li>
+                    <li>Stuff</li>
+                    <li>Stuff</li>
+                    <li>Stuff</li>
+                    <li>Stuff</li>
+                </ol>
+            </aside>
+        </div>
+
+        <div class="toast-container left-pos top-pos"></div>
+        <div class="toast-container right-pos top-pos"></div>
+        <div class="toast-container left-pos bottom-pos"></div>
+        <div class="toast-container right-pos bottom-pos"></div>
+
+        <!-- TOAST TEMPLATE -->
+        <div id="toast-template" class="toast" style="display: none;">
+            <div class="toast-header">
+                <div class="square"> </div>
+                <span>Toasty</span>
+                <img class="close-btn" src="https://img.icons8.com/?size=100&id=NvQ7QXYyF7eO&format=png&color=808080" alt="close" onclick="closeToast(this)">
+            </div>
+            <div class="toast-body">
+                
+            </div>
+        </div>
+    </body>
+    <script src="static/js/get_data.js"></script>
+</html>

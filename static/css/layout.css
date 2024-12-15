@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    flex-direction: row;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+}
+
+.container {width: 80%}
+.stripe {width: 5%}
+.container-right {width: 15%}
+
+@media (max-width: 700px) {
+    .container {width: 80%}
+    .stripe {width: 1%}
+    .container-right {width: 19%}
+}
+
+@media (max-width: 450px) {
+    .container {width: 75%}
+    .stripe {width: 1%}
+    .container-right {width: 24%}
+}
