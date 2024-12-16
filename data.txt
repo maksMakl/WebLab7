@@ -1,0 +1,4 @@
+1;Play button was clicked 2024-12-15 20:02:42
+2;Play button was clicked 2024-12-15 20:02:45
+3;Play button was clicked 2024-12-15 20:02:46
+4;Close button was clicked 2024-12-15 20:02:48

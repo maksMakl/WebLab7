@@ -1,10 +1,26 @@
+var recordCounter = 1;
+
 function sleep(ms) 
 {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function AddMessage(msg)
+{
+    const date = new Date();
+    const currDate = date.toLocaleString();
+    //const datetime = `${currentDate.getUTCFullYear()}-${String(currentDate.getUTCMonth() + 1).padStart(2, '0')}-${String(currentDate.getUTCDate()).padStart(2, '0')} ${String(currentDate.getUTCHours()).padStart(2, '0')}:${String(currentDate.getUTCMinutes()).padStart(2, '0')}:${String(currentDate.getUTCSeconds()).padStart(2, '0')}`;
+    var msg_box = document.getElementById("msgbox");
+    msg_box.textContent = msg;
+    localStorage.setItem(recordCounter, msg + "," + currDate);
+    sendData(recordCounter, msg);
+    recordCounter += 1;
+}
+
 function PlayButtonClick()
 {
+    AddMessage("Play button was clicked");
+
     var workElement = document.getElementById("work");
     var animElement = document.getElementById("anim");
     workElement.style.display = "block";
@@ -28,6 +44,8 @@ function PlayButtonClick()
 
 async function StartButtonClick()
 {
+    AddMessage("Start button was clicked");
+
     var animElement = document.getElementById("anim");
     var play_button = document.getElementById("play-btn");
     var start_button = document.getElementById("start-btn");
@@ -75,11 +93,15 @@ async function StartButtonClick()
         square.style.marginLeft = `${left}px`;
         square.style.marginTop = `${top}px`;
 
+        AddMessage(`Square moved to ${left} ${top}`);
+
         if (left == 0 || top == 0 || left == width - 30 || top == height - 30)
         {
             touched = true;
         }
     } while(!touched);
+
+    AddMessage("Square touched a wall");
 
     play_button.disabled = false;
     start_button.disabled = false;
@@ -91,6 +113,8 @@ async function StartButtonClick()
 
 function ReloadButtonClick()
 {
+    AddMessage("Reload button was clicked");
+
     var animElement = document.getElementById("anim");
 
     var square = document.getElementById("square");
@@ -115,6 +139,44 @@ function ReloadButtonClick()
 
 function CloseButtonClick()
 {
+    AddMessage("Close button was clicked");
     var workElement = document.getElementById("work");
     workElement.style.display = "none";
+
+    for (var i = 1; i < recordCounter; i++)
+    {
+        var msg = localStorage.getItem(i);
+        sendDataFromLocal(i, msg);
+    }
+
+    localStorage.clear();
+    recordCounter = 1;
+}
+
+function sendData(recordNumber, msg) 
+{
+    fetch("/send_data", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        recordNumber: recordNumber, 
+        message: msg 
+      }),
+    })
+}
+
+function sendDataFromLocal(recordNumber, msg) 
+{
+    fetch("/send_data_local", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        recordNumber: recordNumber, 
+        message: msg 
+      }),
+    })
 }
