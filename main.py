@@ -5,7 +5,7 @@ import os
 
 
 app = Flask(__name__)
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False
 
 
 
@@ -72,6 +72,5 @@ def get_data_local():
 
 
 if __name__ == "__main__":
-    #port = int(os.getenv("PORT", 5000))
-    #app.run(host="0.0.0.0", port=port)
-    app.run()
+    port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
