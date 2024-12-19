@@ -11,6 +11,9 @@ app.config['DEBUG'] = True
 
 @app.route("/")
 def send_page():
+    with open('data.txt', 'w') as f:
+        f.write("")
+        
     return render_template("index.html")
 
 
@@ -49,7 +52,7 @@ def get_data():
     with open('data.txt', 'r') as f:
         data = f.read()
     
-    with open('toast_queue.txt', 'w') as f:
+    with open('data.txt', 'w') as f:
         f.write("")
     
     return jsonify({'data': data})

@@ -1,3 +1,6 @@
+var records = [];
+var recordsLocal = [];
+
 var recordCounter = 1;
 
 function sleep(ms) 
@@ -5,7 +8,7 @@ function sleep(ms)
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function AddMessage(msg)
+async function AddMessage(msg)
 {
     const date = new Date();
     const currDate = date.toLocaleString();
@@ -13,13 +16,13 @@ function AddMessage(msg)
     var msg_box = document.getElementById("msgbox");
     msg_box.textContent = msg;
     localStorage.setItem(recordCounter, msg + "," + currDate);
-    sendData(recordCounter, msg);
+    await sendData(recordCounter, msg);
     recordCounter += 1;
 }
 
-function PlayButtonClick()
+async function PlayButtonClick()
 {
-    AddMessage("Play button was clicked");
+    await AddMessage("Play button was clicked");
 
     var workElement = document.getElementById("work");
     var animElement = document.getElementById("anim");
@@ -40,11 +43,18 @@ function PlayButtonClick()
 
     square.style.marginLeft = `${left}px`;
     square.style.marginTop = `${top}px`;
+
+
+    var tableContainer = document.getElementById("table-container");
+    for (var child of tableContainer.children)
+    {
+        tableContainer.removeChild(child);
+    }
 }
 
 async function StartButtonClick()
 {
-    AddMessage("Start button was clicked");
+    await AddMessage("Start button was clicked");
 
     var animElement = document.getElementById("anim");
     var play_button = document.getElementById("play-btn");
@@ -93,7 +103,7 @@ async function StartButtonClick()
         square.style.marginLeft = `${left}px`;
         square.style.marginTop = `${top}px`;
 
-        AddMessage(`Square moved to ${left} ${top}`);
+        await AddMessage(`Square moved to ${left} ${top}`);
 
         if (left == 0 || top == 0 || left == width - 30 || top == height - 30)
         {
@@ -101,7 +111,7 @@ async function StartButtonClick()
         }
     } while(!touched);
 
-    AddMessage("Square touched a wall");
+    await AddMessage("Square touched a wall");
 
     play_button.disabled = false;
     start_button.disabled = false;
@@ -111,9 +121,9 @@ async function StartButtonClick()
     document.getElementById("reload-btn").style.display = "inline-block";
 }
 
-function ReloadButtonClick()
+async function ReloadButtonClick()
 {
-    AddMessage("Reload button was clicked");
+    await AddMessage("Reload button was clicked");
 
     var animElement = document.getElementById("anim");
 
@@ -137,25 +147,29 @@ function ReloadButtonClick()
     document.getElementById("start-btn").style.display = "inline-block";
 }
 
-function CloseButtonClick()
+async function CloseButtonClick()
 {
-    AddMessage("Close button was clicked");
+    await AddMessage("Close button was clicked");
     var workElement = document.getElementById("work");
     workElement.style.display = "none";
 
     for (var i = 1; i < recordCounter; i++)
     {
         var msg = localStorage.getItem(i);
-        sendDataFromLocal(i, msg);
+        await sendDataFromLocal(i, msg);
     }
 
     localStorage.clear();
     recordCounter = 1;
+    await fetchData();
+    await fetchDataLocal();
+    BuildTable();
+
 }
 
-function sendData(recordNumber, msg) 
+async function sendData(recordNumber, msg) 
 {
-    fetch("/send_data", {
+    await fetch("/send_data", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -167,9 +181,9 @@ function sendData(recordNumber, msg)
     })
 }
 
-function sendDataFromLocal(recordNumber, msg) 
+async function sendDataFromLocal(recordNumber, msg) 
 {
-    fetch("/send_data_local", {
+    await fetch("/send_data_local", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -179,4 +193,68 @@ function sendDataFromLocal(recordNumber, msg)
         message: msg 
       }),
     })
+}
+
+async function fetchData() {
+    await fetch('/get_data')
+        .then(response => response.json()) 
+        .then(data => {
+            records = []
+            for (const record of data.data.split("\n"))
+            {
+                if (record == "")
+                {
+                    return;
+                }
+    
+                records.push(record);
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+async function fetchDataLocal() {
+    await fetch('/get_data_local')
+        .then(response => response.json()) 
+        .then(data => {
+            recordsLocal = []
+            for (const record of data.data.split("\n"))
+            {
+                if (record == "")
+                {
+                    return;
+                }
+
+                recordsLocal.push(record);
+            }
+            
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+function BuildTable()
+{
+    var container = document.getElementById("table-container");
+    var table = document.createElement("table");
+
+    var tHeader = table.createTHead();
+    var headerRow = tHeader.insertRow();
+    var th1 = document.createElement("th");
+    var th2 = document.createElement("th");
+    th1.textContent = "Server data";
+    th2.textContent = "Local-server data";
+    headerRow.appendChild(th1);
+    headerRow.appendChild(th2);
+
+    var tBody = table.createTBody();
+    for (var i = 0; i < records.length; i++)
+    {
+        var row = tBody.insertRow();
+        var cell1 = row.insertCell();
+        var cell2 = row.insertCell();
+        cell1.textContent = records[i];
+        cell2.textContent = recordsLocal[i];
+    }
+
+    container.appendChild(table);
 }

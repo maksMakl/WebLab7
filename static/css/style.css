@@ -161,3 +161,22 @@ ol li {
 {
     float: right;
 }
+
+#table-container
+{
+    max-height: 80%;
+    overflow-y: scroll;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f4f4f4;
+}
